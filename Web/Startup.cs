@@ -17,6 +17,7 @@ namespace Web
         // hedhi pour les dépendances
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,14 +29,16 @@ namespace Web
                 app.UseDeveloperExceptionPage();
             }
 
+            // bach nestaamlou les fichier statique (dans notre cas dans le dossier wwwroot)
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                // Home et index sont des exemples 
+                endpoints.MapControllerRoute(
+                    "defaultRoute",
+                    "{controller=Home}/{action=index}/{id?}");
             });
         }
     }
